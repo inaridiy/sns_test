@@ -34,21 +34,31 @@ export default {
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
-
-      '@nuxtjs/auth-next'
-    
+    "@nuxtjs/auth"
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: { baseURL: "http://localhost:4000/" },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: "en"
+      lang: "ja"
     }
   },
-
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: "/auth/login", method: "post", propertyName: "token" },
+          logout: { url: "/auth/logout", method: "post" },
+          user: { url: "/auth/user", method: "get", propertyName: "user" }
+        }
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
+  },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

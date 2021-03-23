@@ -1,32 +1,38 @@
 <template>
-  <v-container>
-    <h1 class="text-h1 text-center">シンプルメモ</h1>
-
-    <div class="text-center">
-      <v-btn
-        class="pa-2"
-        x-large
-        :to="
-          `/memos/${Math.random()
-            .toString(32)
-            .substring(2)}`
-        "
-        >新規作成</v-btn
-      >
-      <div class="pa-2">または</div>
-      <div class=".flex">
-        <v-text-field label="IDを入れてね" v-model="id" outlined></v-text-field>
-        <v-btn :to="`/memos/${id}`">読み込む</v-btn>
-      </div>
+<div>
+  <div>
+  <h1>ログインユーザ</h1>
+  <form @submit.prevent="loginUser">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input v-model="user.email">
     </div>
-  </v-container>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" v-model="user.password">
+    </div>
+    <button type="submit">ログイン</button>
+  </form>
+  </div>
+</div>
 </template>
+
 <script>
-export default {
-  data: () => {
-    return {
-      id: ""
-    };
+  export default {
+    data(){
+      return {
+        user:{
+          email:'',
+          password:''
+        }
+      }
+    },
+    methods:{
+      loginUser(){
+        this.$auth.loginWith('local',{
+          data:this.user
+        })
+      },
+    }
   }
-};
 </script>

@@ -15,6 +15,10 @@ const { Memos, Users } = require("./src/db/models/models");
 const routes = require("./routes/main"); // Routeのインポート
 routes(app);
 
+const { logErrors, errorHandler } = require("./src/middlewares/error");
+app.use(logErrors);
+app.use(errorHandler);
+
 (async () => {
   await Promise.all([Memos.sync(), Users.sync()]);
   app.listen(port, () => {

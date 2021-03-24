@@ -17,10 +17,15 @@ module.exports.Memos = sequelize.define("memo", {
 });
 
 module.exports.Users = sequelize.define("user", {
-  screen_name: Sequelize.STRING,
-  name: Sequelize.STRING,
-  email: Sequelize.STRING,
-  password: Sequelize.STRING,
+  screen_name: { type: Sequelize.STRING },
+  name: { type: Sequelize.STRING, unique: true, allowNull: false },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    validate: { isEmail: true },
+  },
+  password: { type: Sequelize.STRING, allowNull: false },
 });
 
 /* (async () => {

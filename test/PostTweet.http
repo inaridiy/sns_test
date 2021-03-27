@@ -1,0 +1,8 @@
+
+Post http://127.0.0.1:4000/tweet
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImluYXJpIiwibmFtZSI6IuOBhOOBquOCiiIsImVtYWlsIjoiaW5hcmlAZ21haWwuY29tIiwiaWF0IjoxNjE2ODIwMDA3fQ.QodH-zJYSR5OM7KbZpkA2pdTMOaU0Gdd1t_VOaotpsk
+Content-Type: application/json
+
+{
+    "text":"これはテスト"
+}

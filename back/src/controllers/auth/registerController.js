@@ -18,10 +18,10 @@ module.exports.registerC = async function (req, res, next) {
     name: body.name,
     email: body.email,
     password: hashedPassword,
-    user_id: body.id,
+    id: body.id,
   }).catch((e) => next({ Stack: e, msg: "db error" }));
   return res.json({
     message: "create User successfully",
-    data: [body.name, body.email],
+    data: [body.name, body.email, body.id],
   });
 };

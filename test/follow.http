@@ -1,0 +1,8 @@
+
+GET http://127.0.0.1:4000/follow
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImluYXJpIiwibmFtZSI6IuOBhOOBquOCiiIsImVtYWlsIjoiaW5hcmlAZ21haWwuY29tIiwiaWF0IjoxNjE2ODMyNzA1fQ._faMOMTrhwa_mrmOSjgfSZD4oR0Tr8280tu7qCs-Ubk
+Content-Type: application/json
+
+{
+    "get_user_id":"inari2"
+}

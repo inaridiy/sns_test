@@ -18,16 +18,77 @@ module.exports.Memos = sequelize.define("memo", {
 
 module.exports.Users = sequelize.define("user", {
   name: { type: Sequelize.STRING },
-  user_id: { type: Sequelize.STRING, unique: true, allowNull: false },
+  id: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+    primaryKey: true,
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
     validate: { isEmail: true },
   },
+  profile: {
+    type: Sequelize.STRING,
+  },
   password: { type: Sequelize.STRING, allowNull: false },
 });
 
+module.exports.Tweets = sequelize.define("tweet", {
+  id: {
+    type: Sequelize.INTEGER,
+    unique: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  user_id: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+    references: { model: "users", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+  to: {
+    type: Sequelize.INTEGER,
+  },
+  text: {
+    type: Sequelize.STRING,
+  },
+});
+module.exports.Followers = sequelize.define("follower", {
+  user_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: { model: "users", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+  by_user_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: { model: "users", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+});
+module.exports.Likes = sequelize.define("like", {
+  tweet_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: { model: "tweets", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+  user_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    references: { model: "users", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+});
 /* (async () => {
   await Memos.sync();
   const user = await Memos.create({

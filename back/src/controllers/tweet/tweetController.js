@@ -1,6 +1,13 @@
-const { Tweets } = require("../../db/models/models");
+const {
+  Tweets,
+  Retweets,
+  Likes,
+  Users,
+  sequelize,
+} = require("../../db/models/models");
+const Sequelize = require("sequelize");
 
-module.exports.tweetPostC = async function (req, res, next) {
+module.exports.tweetPost = async function (req, res, next) {
   const user = req.user;
   if (!req.auth) {
     next({ Stack: "not login", msg: "not login", statusCode: 403 });
@@ -21,15 +28,40 @@ module.exports.tweetPostC = async function (req, res, next) {
       message: "post tweet successfully",
     });
   } catch (e) {
-    next({ Stack: e, msg: "error", statusCode: 403 });
+    next({ Stack: e, msg: "error", statusCode: 500 });
   }
 };
-module.exports.tweetGetC = async function (req, res, next) {
+
+module.exports.tweetGet = async function (req, res, next) {
   const body = req.body;
-  const tweet = await Tweets.findOne({
-    where: { id: body.id, user_id: body.user_id },
-  });
-  res.json(tweet);
+  try {
+    const tweet = await Tweets.findOne({
+      where: { id: body.id, user_id: body.user_id },
+      attributes: {
+        include: [
+          [
+            Sequelize.fn("COUNT", Sequelize.col("likes.tweet_id")),
+            "likesCount",
+          ],
+          [
+            Sequelize.fn("COUNT", Sequelize.col("retweets.tweet_id")),
+            "retweetCount",
+          ],
+        ],
+      },
+      include: [
+        {
+          model: Users,
+          attributes: ["id", "name"],
+        },
+        { model: Likes, attributes: [] },
+        { model: Retweets, attributes: [] },
+      ],
+    });
+    res.json(tweet);
+  } catch (e) {
+    next({ Stack: e, msg: "error", statusCode: 500 });
+  }
 };
 
 function create_privateid(n) {

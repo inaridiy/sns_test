@@ -1,16 +1,16 @@
 module.exports = function (app) {
   const {
-      followC,
-      unFollowC,
-      getFollowerC,
-      stateWithC,
+      follow,
+      unFollow,
+      getFollower,
+      stateWith,
     } = require("../../src/controllers/follow/followController"),
     { isAuth } = require("../../src/middlewares/isAuth");
 
   app
     .route("/follow")
-    .get(isAuth, getFollowerC)
-    .post(isAuth, followC)
-    .delete(isAuth, unFollowC);
-  app.route("/followWith").get(isAuth, stateWithC);
+    .get(isAuth, getFollower)
+    .post(isAuth, follow)
+    .delete(isAuth, unFollow);
+  app.route("/followWith").get(isAuth, stateWith);
 };

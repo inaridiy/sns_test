@@ -1,9 +1,10 @@
 const { Followers } = require("../../db/models/models");
 
-module.exports.followC = async function (req, res, next) {
+module.exports.follow = async function (req, res, next) {
   const newFollow = req.body.user_id;
-  if (!newFollow)
+  if (!newFollow) {
     next({ Stack: "id not fonund ", msg: "id not fonund", statusCode: 403 });
+  }
 
   try {
     const temp = { user_id: req.user.id, by_user_id: newFollow };
@@ -17,10 +18,11 @@ module.exports.followC = async function (req, res, next) {
   }
 };
 
-module.exports.unFollowC = async function (req, res, next) {
+module.exports.unFollow = async function (req, res, next) {
   const unFollow = req.body.user_id;
-  if (!unFollow)
+  if (!unFollow) {
     next({ Stack: "id not fonund ", msg: "id not fonund", statusCode: 403 });
+  }
 
   try {
     const temp = { user_id: req.user.id, by_user_id: newFollow };
@@ -33,10 +35,11 @@ module.exports.unFollowC = async function (req, res, next) {
   }
 };
 
-module.exports.getFollowerC = async function (req, res, next) {
+module.exports.getFollower = async function (req, res, next) {
   const user_id = req.body.user_id || req.user.id;
-  if (!user_id)
+  if (!user_id) {
     next({ Stack: "id not fonund ", msg: "id not fonund", statusCode: 403 });
+  }
   try {
     const attributes = ["user_id", "by_user_id"];
     const following = await Followers.findAll({
@@ -58,12 +61,13 @@ module.exports.getFollowerC = async function (req, res, next) {
   }
 };
 
-module.exports.stateWithC = async function (req, res, next) {
+module.exports.stateWith = async function (req, res, next) {
   const user_id = req.body.user_id || req.user.id,
     { get_user_id } = req.body;
 
-  if (!user_id || !get_user_id)
+  if (!user_id || !get_user_id) {
     next({ Stack: "id not fonund ", msg: "id not fonund", statusCode: 403 });
+  }
 
   try {
     const isFollow = !!(await Followers.count({

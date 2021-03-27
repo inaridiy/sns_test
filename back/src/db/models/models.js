@@ -10,13 +10,13 @@ const sequelize = new Sequelize("database", "", "", {
   },
 });
 
-module.exports.Memos = sequelize.define("memo", {
+const Memos = sequelize.define("memo", {
   title: Sequelize.STRING,
   memoId: Sequelize.STRING,
   memo: Sequelize.STRING,
 });
 
-module.exports.Users = sequelize.define("user", {
+const Users = sequelize.define("user", {
   name: { type: Sequelize.STRING },
   id: {
     type: Sequelize.STRING,
@@ -36,7 +36,7 @@ module.exports.Users = sequelize.define("user", {
   password: { type: Sequelize.STRING, allowNull: false },
 });
 
-module.exports.Tweets = sequelize.define("tweet", {
+const Tweets = sequelize.define("tweet", {
   id: {
     type: Sequelize.INTEGER,
     unique: true,
@@ -57,7 +57,7 @@ module.exports.Tweets = sequelize.define("tweet", {
     type: Sequelize.STRING,
   },
 });
-module.exports.Followers = sequelize.define("follower", {
+const Followers = sequelize.define("follower", {
   user_id: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -73,10 +73,11 @@ module.exports.Followers = sequelize.define("follower", {
     onDelete: "cascade",
   },
 });
-module.exports.Likes = sequelize.define("like", {
+const Likes = sequelize.define("like", {
   tweet_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    primaryKey: true,
     references: { model: "tweets", key: "id" }, // 外部キー
     onUpdate: "cascade",
     onDelete: "cascade",
@@ -84,11 +85,44 @@ module.exports.Likes = sequelize.define("like", {
   user_id: {
     type: Sequelize.STRING,
     allowNull: false,
+    primaryKey: true,
     references: { model: "users", key: "id" }, // 外部キー
     onUpdate: "cascade",
     onDelete: "cascade",
   },
 });
+const Retweets = sequelize.define("retweet", {
+  tweet_id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: { model: "tweets", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+  user_id: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true,
+    references: { model: "users", key: "id" }, // 外部キー
+    onUpdate: "cascade",
+    onDelete: "cascade",
+  },
+});
+Users.hasMany(Tweets, { foreignKey: "user_id", sourceKey: "id" });
+Tweets.hasOne(Users, { foreignKey: "id", sourceKey: "user_id" });
+Tweets.hasMany(Likes, { foreignKey: "tweet_id", sourceKey: "id" });
+Tweets.hasMany(Retweets, { foreignKey: "tweet_id", sourceKey: "id" });
+
+module.exports = {
+  Users,
+  Tweets,
+  Followers,
+  Likes,
+  Retweets,
+  Memos,
+  sequelize,
+};
 /* (async () => {
   await Memos.sync();
   const user = await Memos.create({

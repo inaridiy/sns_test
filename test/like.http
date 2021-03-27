@@ -1,0 +1,5 @@
+POST  http://127.0.0.1:4000/tweet/like
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImluYXJpIiwibmFtZSI6IuOBhOOBquOCiiIsImVtYWlsIjoiaW5hcmlAZ21haWwuY29tIiwiaWF0IjoxNjE2ODQ3NTU0fQ.Fxpssg6uXWhhsWjtTJ2csuwiWQKsi44LP9hCSP09DBk
+Content-Type: application/json
+
+{"tweet_id":"2730972330"}

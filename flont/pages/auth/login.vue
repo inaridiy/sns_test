@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <form-card title="登録">
+    <form-card title="ログイン">
       <v-form>
         <email-input :email.sync="user.email" :disabled="disabled" />
-        <name-input :name.sync="user.name" :disabled="disabled" />
-        <id-input :id.sync="user.id" :disabled="disabled" />
         <password-input :password.sync="user.password" :disabled="disabled" />
         <v-card-actions>
-          <v-btn class="info" @click="submit" :disabled="disabled">登録</v-btn>
+          <v-btn class="info" @click="submit" :disabled="disabled"
+            >ログイン</v-btn
+          >
         </v-card-actions>
       </v-form>
     </form-card>
@@ -28,20 +28,16 @@
 <script>
 import emailInput from "../../components/form/emailInput.vue";
 import FormCard from "../../components/form/formCard.vue";
-import IdInput from "../../components/form/idInput.vue";
-import NameInput from "../../components/form/nameInput.vue";
 import PasswordInput from "../../components/form/passwordInput.vue";
 
 export default {
-  components: { emailInput, PasswordInput, FormCard, NameInput, IdInput },
+  components: { emailInput, PasswordInput, FormCard },
   data() {
     return {
       error: "",
       disabled: false,
       user: {
         email: "",
-        id: "",
-        name: "",
         password: ""
       }
     };
@@ -50,23 +46,19 @@ export default {
     async submit() {
       const user = this.user;
       this.disabled = true;
-      if (!user.email || !user.id || !user.name || !user.password) {
+      if (!user.email || !user.password) {
         this.disabled = false;
         this.error = "すべての欄に入力してね";
         return;
       }
 
-      this.$axios
-        .post("/auth/register", this.user)
-        .then(response => {
-          this.$auth.loginWith("local", {
-            data: this.user
-          });
+      this.$auth
+        .loginWith("local", {
+          data: this.user
         })
         .catch(e => {
-          this.error = "既に登録されているidまたはemailです。";
+          this.error = "パスワードまたはEmailが間違ってます";
           this.disabled = false;
-          return;
         });
     }
   }

@@ -4,7 +4,7 @@ const { Users } = require("../../db/models/models");
 
 module.exports.registerC = async function (req, res, next) {
   const body = req.body;
-  if (!body.name || !body.password || !body.email) {
+  if (!body.name || !body.password || !body.email || !body.id) {
     next({
       Stack: "client error:not enough",
       msg: "not enough",
@@ -18,7 +18,7 @@ module.exports.registerC = async function (req, res, next) {
     name: body.name,
     email: body.email,
     password: hashedPassword,
-    screen_name: body.name,
+    user_id: body.id,
   }).catch((e) => next({ Stack: e, msg: "db error" }));
   return res.json({
     message: "create User successfully",

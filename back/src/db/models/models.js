@@ -17,8 +17,8 @@ module.exports.Memos = sequelize.define("memo", {
 });
 
 module.exports.Users = sequelize.define("user", {
-  screen_name: { type: Sequelize.STRING },
-  name: { type: Sequelize.STRING, unique: true, allowNull: false },
+  name: { type: Sequelize.STRING },
+  user_id: { type: Sequelize.STRING, unique: true, allowNull: false },
   email: {
     type: Sequelize.STRING,
     unique: true,

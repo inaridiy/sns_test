@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 GET http://127.0.0.1:4000/tweet
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImluYXJpIiwibmFtZSI6IuOBhOOBquOCiiIsImVtYWlsIjoiaW5hcmlAZ21haWwuY29tIiwiaWF0IjoxNjE2ODIwMDA3fQ.QodH-zJYSR5OM7KbZpkA2pdTMOaU0Gdd1t_VOaotpsk
@@ -7,3 +8,19 @@ Content-Type: application/json
     "id":"2730972330",
     "user_id":"inari"
 }
+=======
+POST /upload HTTP/1.1
+Content-Length: 143640
+Content-Type: multipart/form-data;boundary=------FormBoundaryShouldDifferAtRuntime
+Host: localhost:5000
+------FormBoundaryShouldDifferAtRuntime
+Content-Disposition: form-data; name="text"
+
+test
+------FormBoundaryShouldDifferAtRuntime
+Content-Disposition: form-data; name="g"; filename="神奈川沖浪裏.jpg"
+Content-Type: image/jpeg
+
+[message-part-body; type: "image/jpeg", size: 143355 bytes]
+------FormBoundaryShouldDifferAtRuntime--
+>>>>>>> origin/master

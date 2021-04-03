@@ -7,12 +7,22 @@ module.exports.isAuth = async function (req, res, next) {
   const token = bearer[1];
   jwt.verify(token, jwtconfig.secretKey, (err, user) => {
     if (err) {
+<<<<<<< HEAD
       req.auth = false;
       next();
     } else {
       req.user = user;
       req.auth = true;
       next();
+=======
+      return res.status(400).json({
+        message: "need login",
+      });
+    } else {
+      req.user = user;
+      req.auth = true;
+      return next();
+>>>>>>> origin/master
     }
   });
 };
